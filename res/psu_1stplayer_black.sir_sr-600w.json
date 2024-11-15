@@ -1,0 +1,28 @@
+{
+    "type": "psu",
+    "title": "1stPlayer Black.Sir SR-600W",
+    "price": "127,30",
+    "data": {
+        "form_factor": "ATX",
+        "power": "600Вт",
+        "fan_diameter": "120 мм",
+        "pfc": "активный",
+        "80_plus_certificate": "Bronze",
+        "efficiency_standard": "80 PLUS",
+        "current_12v_line": "50 А",
+        "separate_12v_lines": "1",
+        "combined_12v_load": "600 Вт",
+        "efficiency": "85 %",
+        "detachable_cables": false,
+        "motherboard_connector_type": true,
+        "4_pin_cpu_connectors_count": "1",
+        "4_plus_4_pin_cpu_connectors_count": "1",
+        "8_pin_cpu_connectors_count": "1",
+        "6_plus_2_pin_pci_e_connectors_count": "2",
+        "8_pin_pci_e_connectors_count": "2",
+        "4_pin_ide_connectors_count": "3",
+        "15_pin_sata_connectors_count": "5",
+        "width": "150 мм",
+        "weight": "2.3 кг"
+    }
+}
