@@ -1,0 +1,22 @@
+{
+    "type": "cpu",
+    "title": "Intel Core i3-12100F",
+    "price": "197,80",
+    "data": {
+        "line": "Intel Core i3",
+        "socket": "LGA1700",
+        "release_year": "2022",
+        "core_count": "4",
+        "thread_count": "8",
+        "process_technology": "10 нм",
+        "integrated_graphics": false,
+        "processor_clock": "3 300 МГц",
+        "memory_channels": "2",
+        "memory_clock": "4 800 МГц",
+        "l2_cache_size": "5 Мб",
+        "l3_cache_size": "12 Мб",
+        "tdp": "89 Вт",
+        "memory_type": "DDR4, DDR5",
+        "packaging": "OEM"
+    }
+}

@@ -87,9 +87,30 @@ def parse_tables(soup, product_type):
             #'?Вес': 'weight'
         },
         'cpu': {
-            'Частота': 'frequency',
-            'Количество ядер': 'core_count',
-            'Кэш': 'cache'
+            '?Линейка': 'line',
+            '?Сокет': 'socket',
+            'Год выхода на рынок': 'release_year',
+            #'?Ядро': 'core',
+            '?Количество ядер': 'core_count',
+            #'Количество производительных ядер': 'performance_core_count',
+            'Количество потоков': 'thread_count',
+            '?Техпроцесс': 'process_technology',
+            '?Интегрированное графическое ядро': 'integrated_graphics',
+            '?Частота процессора': 'processor_clock',
+            #'Мин. частота производительных ядер': 'min_performance_core_clock',
+            #'Макс. частота производительных ядер': 'max_performance_core_clock',
+            #'?Частота с Turbo Boost': 'turbo_boost_clock',
+            '?Количество каналов памяти': 'memory_channels',
+            'Частота памяти': 'memory_clock',
+            '?Объем кэша L2': 'l2_cache_size',
+            '?Объем кэша L3': 'l3_cache_size',
+            '?Тепловыделение': 'tdp',
+            'Тип памяти': 'memory_type',
+            #'Встроенный контроллер PCI Express': 'pci_express_controller',
+            '?Комплектация': 'packaging',
+            #'Виртуализация Intel VT-x': 'intel_vt_x',
+            #'Виртуализация Intel VT-d': 'intel_vt_d',
+            #'Защищенная платформа Intel TXT': 'intel_txt'
         },
         'gpu': {
             #'?Тип видеокарты': 'gpu_type',
