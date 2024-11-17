@@ -1,4 +1,5 @@
 import requests
+import re
 from bs4 import BeautifulSoup
 import json
 
@@ -18,10 +19,13 @@ def fetch_page(url):
 def parse_product_info(soup):
     try:
         title = soup.find('div', class_='heading').get_text(strip=True)
-        price = soup.find('div', class_='spec-about__price').get_text(strip=True).split(' –')[0]
+        price = float(soup.find('div', class_='spec-about__price').get_text(strip=True).split(' –')[0].replace(',', '.'))
         return title, price
     except AttributeError:
         raise Exception('Не удалось найти необходимые элементы на странице.')
+
+def extract_numbers(data):
+    return ''.join(re.findall(r'\d+', data))
 
 def parse_tables(soup, product_type):
     tables_container = soup.find('div', class_='spec-info__main')
@@ -34,9 +38,8 @@ def parse_tables(soup, product_type):
     if not tables:
         raise Exception('Таблицы не найдены.')
     
-    combined_data = {}  # Новый словарь для объединенных данных
+    combined_data = {}
     
-    # Словари для замены названий полей
     field_mapping = {
         'case': {
             '?Типоразмер': 'form_factor',
@@ -316,7 +319,6 @@ def parse_tables(soup, product_type):
             if row.find_all(['td', 'th'])
         ]
         
-        # Сохранение данных в зависимости от типа продукта
         if product_type in field_mapping:
             for row in table_data:
                 if len(row) >= 2 and row[0] in field_mapping[product_type]:
@@ -327,12 +329,19 @@ def parse_tables(soup, product_type):
                     elif '-' in row[1]:
                         combined_data[new_key] = False
                     else:
-                        combined_data[new_key] = row[1]
+                        if re.search(r'[А-Яа-я]', row[1]):
+                            number_str = extract_numbers(row[1])
+                            combined_data[new_key] = int(number_str) if number_str else 0
+                        else:
+                            try:
+                                combined_data[new_key] = int(row[1])
+                            except ValueError:
+                                combined_data[new_key] = row[1]
 
-    return combined_data  # Возвращаем объединенные данные
+    return combined_data
 
 def save_to_json(data, product_type, title):
-    filename = f'{product_type}_{title.lower().replace(" ", "_")}.json'
+    filename = f'res/{product_type}_{title.lower().replace(" ", "_")}.json'
     with open(filename, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
     print(f'Данные успешно сохранены в {filename}')
@@ -359,7 +368,6 @@ def parse_product_and_tables(url):
         soup = fetch_page(url)
         raw_title, price = parse_product_info(soup)
         
-        # Передаем тип продукта в функцию парсинга таблиц
         tables = parse_tables(soup, product_type)
 
         if product_type == 'case':
@@ -379,7 +387,7 @@ def parse_product_and_tables(url):
             'type': product_type,
             'title': title,
             'price': price,
-            'data': tables  # Объединенные данные теперь здесь
+            'data': tables
         }
 
         save_to_json(result, product_type, title)
